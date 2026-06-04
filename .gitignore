@@ -1,0 +1,15 @@
+# Dependencies (none committed; build installs them)
+node_modules/
+
+# Logs / OS / editor cruft
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Env / secrets — never commit
+.env
+.env.*
+*.local

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://garrettnunes.com/sitemap.xml
