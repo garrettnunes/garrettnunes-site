@@ -70,6 +70,24 @@ for (const tag of ["html", "head", "body", "main", "header", "footer"]) {
 if (!/<title>[^<]+<\/title>/.test(html)) warnings.push("Missing or empty <title>.");
 if (!/name="description"/.test(html)) warnings.push("Missing meta description.");
 
+// --- 6. social / SEO essentials (soft, but caught early) ---
+if (!/property="og:image"/.test(html)) warnings.push("Missing og:image (social preview).");
+if (!/rel="canonical"/.test(html)) warnings.push("Missing canonical link.");
+
+// --- 7. JSON-LD structured data must be valid JSON ---
+const ldRe = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+let ld;
+let ldCount = 0;
+while ((ld = ldRe.exec(html)) !== null) {
+  ldCount++;
+  try {
+    JSON.parse(ld[1].trim());
+  } catch (e) {
+    errors.push(`JSON-LD block #${ldCount} is not valid JSON: ${e.message}`);
+  }
+}
+if (ldCount === 0) warnings.push("No JSON-LD structured data found.");
+
 report();
 
 function report() {

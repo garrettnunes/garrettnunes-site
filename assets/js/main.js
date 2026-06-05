@@ -23,6 +23,41 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  /* ---- Mobile nav toggle ---- */
+  var navToggle = document.getElementById("nav-toggle");
+  var navLinks = document.getElementById("nav-links");
+  if (navToggle && navLinks) {
+    function closeNav() {
+      navLinks.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Open menu");
+    }
+    function openNav() {
+      navLinks.classList.add("open");
+      navToggle.setAttribute("aria-expanded", "true");
+      navToggle.setAttribute("aria-label", "Close menu");
+    }
+    navToggle.addEventListener("click", function () {
+      if (navLinks.classList.contains("open")) closeNav();
+      else openNav();
+    });
+    // close after picking a destination
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.closest("a")) closeNav();
+    });
+    // close on Escape
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) {
+        closeNav();
+        navToggle.focus();
+      }
+    });
+    // close if resized up to desktop
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 640) closeNav();
+    });
+  }
+
   /* ---- Reveal on scroll ---- */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -40,6 +75,37 @@
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
     revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---- Scroll-spy: highlight the active section in the nav ---- */
+  var spyLinks = Array.prototype.slice.call(
+    document.querySelectorAll('.nav-links a[href^="#"]')
+  );
+  var spyTargets = spyLinks
+    .map(function (a) {
+      var id = a.getAttribute("href").slice(1);
+      var el = id ? document.getElementById(id) : null;
+      return el ? { link: a, el: el } : null;
+    })
+    .filter(Boolean);
+
+  if (spyTargets.length && "IntersectionObserver" in window) {
+    var spyObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var match = spyTargets.find(function (t) {
+            return t.el === entry.target;
+          });
+          if (!match) return;
+          if (entry.isIntersecting) {
+            spyLinks.forEach(function (l) { l.classList.remove("active"); });
+            match.link.classList.add("active");
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    spyTargets.forEach(function (t) { spyObserver.observe(t.el); });
   }
 
   /* ---- Card pointer glow ---- */
@@ -109,7 +175,12 @@
      Lightweight particle field that drifts + links nearby nodes.
      Disabled under reduced-motion or on very small screens.        */
   var canvas = document.getElementById("bg-canvas");
-  if (canvas && !reduceMotion) {
+  // Skip the particle field on phones (cost > benefit, saves battery) and
+  // under reduced-motion. The CSS radial glow still provides depth.
+  var smallScreen = window.matchMedia
+    ? window.matchMedia("(max-width: 640px)").matches
+    : window.innerWidth <= 640;
+  if (canvas && !reduceMotion && !smallScreen) {
     var ctx = canvas.getContext("2d");
     var w, h, dpr, particles, raf;
     var COUNT_BASE = 0.00008; // density per px^2

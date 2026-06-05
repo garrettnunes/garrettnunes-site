@@ -18,10 +18,13 @@ sitemap.xml           Single-URL sitemap
 render.yaml           Render static-site deploy manifest
 package.json          Scripts (build check + local preview server)
 assets/
-  css/styles.css      All styling (dark theme, motion, responsive)
-  js/main.js          Reveals, header state, card glow, terminal, bg canvas
+  css/styles.css      All styling (dark theme, motion, responsive, mobile nav)
+  js/main.js          Reveals, header state, mobile nav, scroll-spy, card glow,
+                      terminal typewriter, background canvas
+  img/og.svg          Source for the social-share card (1200×630)
+  img/og.png          Rendered OpenGraph/Twitter image (referenced by meta tags)
 scripts/
-  check.mjs           Zero-dep build check (assets/anchors/tags) — runs on deploy
+  check.mjs           Zero-dep build check (assets/anchors/tags/JSON-LD) — runs on deploy
   serve.mjs           Zero-dep local preview server
 ```
 
@@ -92,8 +95,11 @@ slots in — just add it as another static site/route under the existing account
 ## Before launch — quick edits
 
 - **Contact email:** `index.html` uses a placeholder `hello@garrettnunes.com`
-  (search for it). Swap in the real inbox. There's a visible note on the page reminding
-  you to do this.
+  (search for it — it appears once in the contact section). Swap in the real inbox.
+  There's a visible note on the page reminding you to do this.
+- **Social card:** `assets/img/og.png` is the OpenGraph/Twitter preview (1200×630,
+  rendered from `assets/img/og.svg`). To re-render after editing the SVG:
+  `npx sharp-cli -i assets/img/og.svg -o assets/img/og.png resize 1200 630`.
 - Everything else (copy, ventures, links) is public-safe and ready as-is.
 
 ---
