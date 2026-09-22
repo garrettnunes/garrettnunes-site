@@ -1,0 +1,12 @@
+{
+  "name": "garrettnunes-site",
+  "kind": "surface",
+  "what": "Garrett's personal site — single-page static site, no backend.",
+  "host": "render",
+  "port": 8006,
+  "url": "https://garrettnunes.com",
+  "health": null,
+  "unit": null,
+  "data_dir": null,
+  "note": "Hosted on Render (render.yaml, static_site), not a .seed-managed box — registered here for the apps hub listing and repo discipline only. port 8006 is for local preview only (scripts/serve.mjs), nothing binds it in production."
+}
