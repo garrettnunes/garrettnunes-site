@@ -131,7 +131,8 @@
   <!-- Skip link for a11y -->
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
+  <!-- no id="top" on purpose: the header is sticky, and a jump to a stuck element goes nowhere; a bare #top scrolls to the document start (HTML spec) -->
+  <header class="site-header">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top" aria-label="Garrett Nunes — home">
         <span class="brand-mark" aria-hidden="true">G</span>
