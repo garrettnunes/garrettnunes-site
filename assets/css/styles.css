@@ -625,3 +625,102 @@ a { color: inherit; text-decoration: none; }
   .scroll-hint span { animation: none; opacity: 0.8; }
   .cursor { animation: none; }
 }
+
+/* ---- Companies: the storefront line under a card title ---- */
+.card-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--text-faint) !important;
+  margin: -6px 0 14px;
+}
+.card-sub a { color: var(--accent); }
+.card-sub a:hover { text-decoration: underline; }
+
+/* ---- The work: OS, apps, projects ---- */
+.mono { font-family: "JetBrains Mono", monospace; font-size: 0.9em; color: var(--accent); }
+.os-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 800px) { .os-grid { grid-template-columns: 1fr; gap: 28px; } }
+.os-copy h3, .sub-head { font-size: 1.35rem; letter-spacing: -0.01em; margin-bottom: 12px; }
+.os-copy p { color: var(--text-dim); margin-top: 14px; }
+.os-copy strong { color: var(--text); }
+.os-quote {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-2);
+  border-radius: var(--radius);
+  padding: 26px 26px;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+.os-quote cite {
+  display: block;
+  margin-top: 14px;
+  font-style: normal;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+  color: var(--text-faint);
+}
+.sub-head { margin-top: 56px; }
+.apps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px 22px;
+}
+.apps li {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+.app-name {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  color: var(--accent);
+  padding-top: 2px;
+}
+.projects { list-style: none; display: grid; gap: 0; }
+.projects li {
+  display: grid;
+  grid-template-columns: 52px 1.1fr 2fr 128px;
+  gap: 16px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.93rem;
+}
+@media (max-width: 720px) {
+  .projects li { grid-template-columns: 44px 1fr auto; }
+  .projects .proj-note { grid-column: 2 / -1; }
+}
+.proj-num { font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--text-faint); }
+.proj-title { color: var(--text); font-weight: 600; }
+.proj-note { color: var(--text-dim); }
+.proj-status {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  justify-self: end;
+  text-align: center;
+}
+.proj-status.done { color: var(--accent); border-color: rgba(94, 234, 212, 0.35); }
+.contact-note a { color: var(--text-dim); }
+.contact-note a:hover { color: var(--accent); }
+.principles .reveal:nth-child(5) { transition-delay: 0.32s; }
+.principles .reveal:nth-child(6) { transition-delay: 0.40s; }
